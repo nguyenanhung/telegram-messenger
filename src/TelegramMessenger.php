@@ -24,13 +24,13 @@ class TelegramMessenger implements TelegramMessengerInterface
     const _CLASS_NAME_ = 'TelegramMessenger';
 
     /** @var array|null SDK Config */
-    private $sdkConfig;
+    protected $sdkConfig;
     /** @var null|string|int ChatID */
-    private $chatId = NULL;
+    protected $chatId = NULL;
     /** @var null|string Text Message */
-    private $message = NULL;
+    protected $message = NULL;
     /** @var null|string File Attachment content */
-    private $fileAttachment = NULL;
+    protected $fileAttachment = NULL;
 
     /**
      * TelegramMessenger constructor.
@@ -40,6 +40,49 @@ class TelegramMessenger implements TelegramMessengerInterface
      */
     public function __construct()
     {
+    }
+
+    /**
+     * Function getVersion
+     *
+     * @return mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 9/5/19 58:18
+     */
+    public function getVersion()
+    {
+        return self::VERSION;
+    }
+
+    /**
+     * Function setSdkConfig
+     *
+     * @param array $sdkConfig
+     *
+     * @return $this
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 9/5/19 57:57
+     */
+    public function setSdkConfig($sdkConfig = array())
+    {
+        $this->sdkConfig = $sdkConfig;
+
+        return $this;
+    }
+
+    /**
+     * Function getSdkConfig
+     *
+     * @return array|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 9/5/19 57:59
+     */
+    public function getSdkConfig()
+    {
+        return $this->sdkConfig;
     }
 
     /**

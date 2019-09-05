@@ -18,6 +18,7 @@ namespace nguyenanhung\TelegramMessenger;
  */
 interface TelegramMessengerInterface
 {
+    const VERSION                       = '1.0';
     const TELEGRAM_MESSENGER_CONFIG_KEY = 'telegram_messages';
     const TELEGRAM_API                  = 'https://api.telegram.org/bot';
     const METHOD_GET_UPDATES            = '/getUpdates';
