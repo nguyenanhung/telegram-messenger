@@ -4,8 +4,9 @@
     "description": "Send Messenger with Telegram BOT API",
     "keywords": [
         "php",
-        "mantis",
-        "bug",
+        "telegram",
+        "message",
+        "bot",
         "tracker",
         "connector"
     ],
