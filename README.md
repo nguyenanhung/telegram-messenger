@@ -12,7 +12,7 @@ Các phương thức hỗ trợ
 Toàn bộ concept cho class được chia sẻ tại đây: https://tungvandev.github.io/2019-08-17/teletegram-ung-dung-trong-theo-doi-service/
 
 ## Hướng dẫn cài đặt & sử dụng
-
+Bạn sẽ tìm thấy hướng dẫn cài đặt và sử dụng tại đây: https://github.com/nguyenanhung/telegram-messenger/blob/master/document/README.md
 
 ## Contact
 
