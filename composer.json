@@ -1,0 +1,34 @@
+{
+    "name": "nguyenanhung/telegram-messenger",
+    "type": "library",
+    "description": "Send Messenger with Telegram BOT API",
+    "keywords": [
+        "php",
+        "mantis",
+        "bug",
+        "tracker",
+        "connector"
+    ],
+    "homepage": "https://github.com/nguyenanhung/telegram-messenger",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Nguyen An Hung",
+            "email": "dev@nguyenanhung.com",
+            "homepage": "https://nguyenanhung.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "kint-php/kint": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "nguyenanhung\\TelegramMessenger\\": "src/"
+        }
+    }
+}
