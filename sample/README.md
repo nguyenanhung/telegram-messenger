@@ -1,12 +1,7 @@
-# Telegram Messenger
+# Sample
 
-Send Message with Telegram BOT API
-
-- [x] SendMessage via ChatID
-- [x] SendPhoto via ChatID
-- [x] SendAudio via ChatID
-- [x] SendVideo via ChatID
-- [x] SendDocument via ChatID
+- [x] Example Config
+- [x] Example Send Message
 
 ### Contact
 

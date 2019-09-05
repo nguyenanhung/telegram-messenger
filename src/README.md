@@ -1,6 +1,4 @@
-# Telegram Messenger
-
-Send Message with Telegram BOT API
+# Class TelegramMessenger
 
 - [x] SendMessage via ChatID
 - [x] SendPhoto via ChatID

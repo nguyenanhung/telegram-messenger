@@ -1,12 +1,6 @@
-# Telegram Messenger
+# Helpers
 
-Send Message with Telegram BOT API
-
-- [x] SendMessage via ChatID
-- [x] SendPhoto via ChatID
-- [x] SendAudio via ChatID
-- [x] SendVideo via ChatID
-- [x] SendDocument via ChatID
+- [x] Quick Function Send Message via Telegram
 
 ### Contact
 

@@ -29,6 +29,9 @@
     "autoload": {
         "psr-4": {
             "nguyenanhung\\TelegramMessenger\\": "src/"
-        }
+        },
+        "files": [
+            "helpers/telegram_helper.php"
+        ]
     }
 }
