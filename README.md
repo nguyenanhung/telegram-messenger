@@ -1,6 +1,6 @@
 # Telegram Messenger
 
-Send Message with Telegram BOT API
+Các phương thức hỗ trợ
 
 - [x] SendMessage via ChatID
 - [x] SendPhoto via ChatID
@@ -8,7 +8,13 @@ Send Message with Telegram BOT API
 - [x] SendVideo via ChatID
 - [x] SendDocument via ChatID
 
-### Contact
+## Concept
+Toàn bộ concept cho class được chia sẻ tại đây: https://tungvandev.github.io/2019-08-17/teletegram-ung-dung-trong-theo-doi-service/
+
+## Hướng dẫn cài đặt & sử dụng
+
+
+## Contact
 
 | STT  | Họ tên         | SĐT           | Email           | Skype            |
 | ---- | -------------- | ------------- | --------------- | ---------------- |
