@@ -142,10 +142,18 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 // Khai báo biến chứa data config
 // Đường dẫn tới file cấu hình, hoặc có thể config 1 array và gán cho biến config
-$config = include __DIR__ . '/samle_config.php';
+$config = array(
+    // Telegram Messenger
+    'telegram_messages' => array(
+        'bot_name'        => 'xxx',
+        'bot_api_key'     => 'xxx',
+        'default_chat_id' => 1234,
+    )
+);
+
 
 // Khai báo Chat_ID
-$chat_id = 1234;
+$chat_id = 474860058;
 
 // Khai báo nội dung cần gửi đi
 $message = 'Test gửi tin';
