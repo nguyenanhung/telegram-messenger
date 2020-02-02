@@ -24,9 +24,7 @@ if (!function_exists('telegram_simple_message')) {
     function telegram_simple_message($config = array(), $chat_id = '', $message = '')
     {
         $telegram = new nguyenanhung\TelegramMessenger\TelegramMessenger();
-        $telegram->setSdkConfig($config)
-                 ->setChatId($chat_id)
-                 ->setMessage($message);
+        $telegram->setSdkConfig($config)->setChatId($chat_id)->setMessage($message);
         $result = $telegram->sendMessage();
         return $result;
     }

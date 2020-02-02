@@ -257,7 +257,15 @@ class TelegramMessenger implements TelegramMessengerInterface
         }
 
         // Xác định tham số gửi tin đi
-        $chatId      = !empty($this->chatId) ? $this->chatId : (isset($sdkConfig['default_chat_id']) ? $sdkConfig['default_chat_id'] : NULL);
+        if (!empty($this->chatId)) {
+            $chatId = $this->chatId;
+        } else {
+            if (isset($sdkConfig['default_chat_id'])) {
+                $chatId = $sdkConfig['default_chat_id'];
+            } else {
+                $chatId = NULL;
+            }
+        }
         $textMessage = !empty($this->message) ? $this->message : NULL;
         if (empty($chatId) || empty($textMessage)) {
             $responseMsg = self::_CLASS_NAME_ . ' -> Không xác định được chủ đề cuộc trò chuyện và nội dung gửi đi. ChatID: ' . $chatId . ' - TextMessage: ' . $textMessage;
@@ -332,7 +340,15 @@ class TelegramMessenger implements TelegramMessengerInterface
         }
 
         // Xác định tham số gửi tin đi
-        $chatId  = !empty($this->chatId) ? $this->chatId : (isset($sdkConfig['default_chat_id']) ? $sdkConfig['default_chat_id'] : NULL);
+        if (!empty($this->chatId)) {
+            $chatId = $this->chatId;
+        } else {
+            if (isset($sdkConfig['default_chat_id'])) {
+                $chatId = $sdkConfig['default_chat_id'];
+            } else {
+                $chatId = NULL;
+            }
+        }
         $caption = !empty($this->message) ? $this->message : 'Photo';
         $photo   = !empty($this->fileAttachment) ? $this->fileAttachment : NULL;
         if (empty($chatId) || empty($photo)) {
@@ -408,7 +424,15 @@ class TelegramMessenger implements TelegramMessengerInterface
         }
 
         // Xác định tham số gửi tin đi
-        $chatId  = !empty($this->chatId) ? $this->chatId : (isset($sdkConfig['default_chat_id']) ? $sdkConfig['default_chat_id'] : NULL);
+        if (!empty($this->chatId)) {
+            $chatId = $this->chatId;
+        } else {
+            if (isset($sdkConfig['default_chat_id'])) {
+                $chatId = $sdkConfig['default_chat_id'];
+            } else {
+                $chatId = NULL;
+            }
+        }
         $caption = !empty($this->message) ? $this->message : 'Audio';
         $audio   = !empty($this->fileAttachment) ? $this->fileAttachment : NULL;
         if (empty($chatId) || empty($audio)) {
@@ -484,7 +508,15 @@ class TelegramMessenger implements TelegramMessengerInterface
         }
 
         // Xác định tham số gửi tin đi
-        $chatId  = !empty($this->chatId) ? $this->chatId : (isset($sdkConfig['default_chat_id']) ? $sdkConfig['default_chat_id'] : NULL);
+        if (!empty($this->chatId)) {
+            $chatId = $this->chatId;
+        } else {
+            if (isset($sdkConfig['default_chat_id'])) {
+                $chatId = $sdkConfig['default_chat_id'];
+            } else {
+                $chatId = NULL;
+            }
+        }
         $caption = !empty($this->message) ? $this->message : 'video';
         $video   = !empty($this->fileAttachment) ? $this->fileAttachment : NULL;
         if (empty($chatId) || empty($video)) {
@@ -560,7 +592,15 @@ class TelegramMessenger implements TelegramMessengerInterface
         }
 
         // Xác định tham số gửi tin đi
-        $chatId   = !empty($this->chatId) ? $this->chatId : (isset($sdkConfig['default_chat_id']) ? $sdkConfig['default_chat_id'] : NULL);
+        if (!empty($this->chatId)) {
+            $chatId = $this->chatId;
+        } else {
+            if (isset($sdkConfig['default_chat_id'])) {
+                $chatId = $sdkConfig['default_chat_id'];
+            } else {
+                $chatId = NULL;
+            }
+        }
         $caption  = !empty($this->message) ? $this->message : 'Document';
         $document = !empty($this->fileAttachment) ? $this->fileAttachment : NULL;
         if (empty($chatId) || empty($document)) {
