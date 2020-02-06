@@ -14,7 +14,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $config = include __DIR__ . '/samle_config.php';
 
 // Khai báo Chat_ID
-$chat_id = 474860058;
+$chat_id = -387151297;
 
 // Khai báo nội dung cần gửi đi
 $message = 'Test gửi tin';

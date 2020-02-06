@@ -258,10 +258,10 @@ class TelegramMessenger implements TelegramMessengerInterface
 
         // Xác định tham số gửi tin đi
         if (!empty($this->chatId)) {
-            $chatId = $this->chatId;
+            $chatId = (string) $this->chatId;
         } else {
             if (isset($sdkConfig['default_chat_id'])) {
-                $chatId = $sdkConfig['default_chat_id'];
+                $chatId = (string) $sdkConfig['default_chat_id'];
             } else {
                 $chatId = NULL;
             }
@@ -290,7 +290,7 @@ class TelegramMessenger implements TelegramMessengerInterface
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return $sendRequest;
         }
 
         // Trường hợp gửi tin nhắn thành công
@@ -301,10 +301,10 @@ class TelegramMessenger implements TelegramMessengerInterface
                 log_message('debug', $responseMsg);
             }
 
-            return TRUE;
+            return $sendRequest;
         }
 
-        return FALSE;
+        return $sendRequest;
     }
 
     /**
@@ -341,10 +341,10 @@ class TelegramMessenger implements TelegramMessengerInterface
 
         // Xác định tham số gửi tin đi
         if (!empty($this->chatId)) {
-            $chatId = $this->chatId;
+            $chatId = (string) $this->chatId;
         } else {
             if (isset($sdkConfig['default_chat_id'])) {
-                $chatId = $sdkConfig['default_chat_id'];
+                $chatId = (string) $sdkConfig['default_chat_id'];
             } else {
                 $chatId = NULL;
             }
@@ -425,10 +425,10 @@ class TelegramMessenger implements TelegramMessengerInterface
 
         // Xác định tham số gửi tin đi
         if (!empty($this->chatId)) {
-            $chatId = $this->chatId;
+            $chatId = (string) $this->chatId;
         } else {
             if (isset($sdkConfig['default_chat_id'])) {
-                $chatId = $sdkConfig['default_chat_id'];
+                $chatId = (string) $sdkConfig['default_chat_id'];
             } else {
                 $chatId = NULL;
             }
@@ -509,10 +509,10 @@ class TelegramMessenger implements TelegramMessengerInterface
 
         // Xác định tham số gửi tin đi
         if (!empty($this->chatId)) {
-            $chatId = $this->chatId;
+            $chatId = (string) $this->chatId;
         } else {
             if (isset($sdkConfig['default_chat_id'])) {
-                $chatId = $sdkConfig['default_chat_id'];
+                $chatId = (string) $sdkConfig['default_chat_id'];
             } else {
                 $chatId = NULL;
             }
@@ -593,10 +593,10 @@ class TelegramMessenger implements TelegramMessengerInterface
 
         // Xác định tham số gửi tin đi
         if (!empty($this->chatId)) {
-            $chatId = $this->chatId;
+            $chatId = (string) $this->chatId;
         } else {
             if (isset($sdkConfig['default_chat_id'])) {
-                $chatId = $sdkConfig['default_chat_id'];
+                $chatId = (string) $sdkConfig['default_chat_id'];
             } else {
                 $chatId = NULL;
             }
