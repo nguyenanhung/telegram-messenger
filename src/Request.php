@@ -43,6 +43,7 @@ trait Request
             CURLOPT_TIMEOUT        => $timeout,
             CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST  => "POST",
+            CURLOPT_SSLVERSION     => 3,
             CURLOPT_HTTPHEADER     => array(
                 "Accept: */*",
                 "Accept-Encoding: gzip, deflate",
