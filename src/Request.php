@@ -34,7 +34,19 @@ trait Request
     public function sendRequest($url = '', $params = array(), $timeout = 30)
     {
         $endpoint = $url . '?' . http_build_query($params);
-        $result   = file_get_contents($endpoint);
+        $curl     = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL            => $endpoint,
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_ENCODING       => "",
+            CURLOPT_MAXREDIRS      => 10,
+            CURLOPT_TIMEOUT        => $timeout,
+            CURLOPT_FOLLOWLOCATION => TRUE,
+            CURLOPT_SSLVERSION     => CURL_SSLVERSION_TLSv1_2,
+            CURLOPT_CUSTOMREQUEST  => "POST",
+        ));
+        $result = curl_exec($curl);
+        curl_close($curl);
 
         return $result;
     }
