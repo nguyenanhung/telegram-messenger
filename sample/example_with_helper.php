@@ -11,7 +11,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 // Khai báo biến chứa data config
 // Đường dẫn tới file cấu hình, hoặc có thể config 1 array và gán cho biến config
-$config = include __DIR__ . '/samle_config.php';
+$config = include __DIR__ . '/sample_config.php';
 
 // Khai báo Chat_ID
 $chat_id = -387151297;

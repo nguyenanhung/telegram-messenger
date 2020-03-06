@@ -15,7 +15,7 @@ $telegram = new TelegramMessenger();
 
 // Khai báo biến chứa data config
 // Đường dẫn tới file cấu hình, hoặc có thể config 1 array và gán cho biến config
-$config   = include __DIR__ . '/samle_config.php';
+$config = include __DIR__ . '/sample_config.php';
 
 // Get Version
 d($telegram->getVersion());
@@ -26,7 +26,7 @@ d($telegram->getSdkConfig());
 
 // Gắn cấu hình Chat_ID và Nội dung cần gửi tin đi
 $telegram->setChatId('xxx')
-    ->setMessage('Test via PHP');
+         ->setMessage('Test via PHP');
 
 // Gửi tin tới người nhận
 // Result == TRUE nếu gửi tin thành công
