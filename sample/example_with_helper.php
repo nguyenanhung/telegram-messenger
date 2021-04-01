@@ -24,4 +24,6 @@ $message = 'Test gửi tin';
 // ngược lại là thất bại
 $result = telegram_simple_message($config, $chat_id, $message);
 
-d($result);
+echo "<pre>";
+print_r($result);
+echo "</pre>";

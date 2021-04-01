@@ -18,11 +18,15 @@ $telegram = new TelegramMessenger();
 $config = include __DIR__ . '/sample_config.php';
 
 // Get Version
-d($telegram->getVersion());
+echo "<pre>";
+print_r($telegram->getVersion());
+echo "</pre>";
 
 // Truyền config vào class Telegram
 $telegram->setSdkConfig($config);
-d($telegram->getSdkConfig());
+echo "<pre>";
+print_r($telegram->getSdkConfig());
+echo "</pre>";
 
 // Gắn cấu hình Chat_ID và Nội dung cần gửi tin đi
 $telegram->setChatId('xxx')
@@ -33,4 +37,6 @@ $telegram->setChatId('xxx')
 // ngược lại là thất bại
 $result = $telegram->sendMessage();
 
-d($result);
+echo "<pre>";
+print_r($result);
+echo "</pre>";

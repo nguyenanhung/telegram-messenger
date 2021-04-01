@@ -17,11 +17,18 @@ namespace nguyenanhung\TelegramMessenger;
  * @author    713uk13m <dev@nguyenanhung.com>
  * @copyright 713uk13m <dev@nguyenanhung.com>
  */
-class TelegramMessenger implements TelegramMessengerInterface
+class TelegramMessenger
 {
-    use Request;
-
-    const _CLASS_NAME_ = 'TelegramMessenger';
+    const _CLASS_NAME_                  = 'TelegramMessenger';
+    const VERSION                       = '1.0.6';
+    const TELEGRAM_MESSENGER_CONFIG_KEY = 'telegram_messages';
+    const TELEGRAM_API                  = 'https://api.telegram.org/bot';
+    const METHOD_GET_UPDATES            = '/getUpdates';
+    const METHOD_SEND_MESSAGE           = '/sendMessage';
+    const METHOD_SEND_PHOTO             = '/sendPhoto';
+    const METHOD_SEND_AUDIO             = '/sendAudio';
+    const METHOD_SEND_VIDEO             = '/sendVideo';
+    const METHOD_SEND_DOCUMENT          = '/sendDocument';
 
     /** @var array|null SDK Config */
     protected $sdkConfig;
@@ -45,10 +52,10 @@ class TelegramMessenger implements TelegramMessengerInterface
     /**
      * Function getVersion
      *
-     * @return mixed
+     * @return string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 9/5/19 58:18
+     * @time     : 04/01/2021 03:40
      */
     public function getVersion()
     {
@@ -63,7 +70,7 @@ class TelegramMessenger implements TelegramMessengerInterface
      * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 9/5/19 57:57
+     * @time     : 04/01/2021 16:47
      */
     public function setSdkConfig($sdkConfig = array())
     {
@@ -78,7 +85,7 @@ class TelegramMessenger implements TelegramMessengerInterface
      * @return array|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 9/5/19 57:59
+     * @time     : 04/01/2021 16:43
      */
     public function getSdkConfig()
     {
@@ -86,12 +93,46 @@ class TelegramMessenger implements TelegramMessengerInterface
     }
 
     /**
-     * Function getBotUpdates
+     * Function sendRequest - Hàm request tới Endpoint sử dụng phương thức GET, thư viện cURL với TLS v1.2
      *
-     * @return array|mixed
+     * @param string $url     URL Endpoint cần gọi
+     * @param array  $params  Data Params cần truyền dữ liệu
+     * @param int    $timeout Thời gian chờ phản hồi dữ liệu tối đa
+     *
+     * @return bool|string
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 9/5/19 54:17
+     * @time     : 04/01/2021 00:35
+     */
+    private function __sendRequest($url = '', $params = array(), $timeout = 30)
+    {
+        $endpoint = $url . '?' . http_build_query($params);
+        $curl     = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL            => $endpoint,
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_ENCODING       => "",
+            CURLOPT_MAXREDIRS      => 10,
+            CURLOPT_TIMEOUT        => $timeout,
+            CURLOPT_FOLLOWLOCATION => TRUE,
+            CURLOPT_SSLVERSION     => CURL_SSLVERSION_TLSv1_2,
+            CURLOPT_CUSTOMREQUEST  => "POST",
+        ));
+        $result = curl_exec($curl);
+        curl_close($curl);
+
+        return $result;
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Bot Updates ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
+
+    /**
+     * Function getBotUpdates
+     *
+     * @return bool[]|mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 04/01/2021 16:38
      */
     public function getBotUpdates()
     {
@@ -110,19 +151,15 @@ class TelegramMessenger implements TelegramMessengerInterface
 
         // Thiết lập Endpoint và Tham số gửi tin đi
         $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_GET_UPDATES;
-        $sendRequest = $this->sendRequest($endpoint, array());
+        $sendRequest = self::__sendRequest($endpoint);
         $res         = json_decode(trim($sendRequest));
 
-        // Nếu không xác định được nội dung trả về
-        if ($res == NULL) {
-            return $errorResponse;
-        }
-
-        // Trường hợp gửi tin nhắn thành công
+        // Get Updates thành công
         if ((isset($res->ok) && ($res->ok == TRUE)) && isset($res->result)) {
             return $res;
         }
 
+        // Default returns Error Message
         return $errorResponse;
     }
 
@@ -136,7 +173,7 @@ class TelegramMessenger implements TelegramMessengerInterface
      * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 9/5/19 54:10
+     * @time     : 04/01/2021 16:33
      */
     public function setChatId($chatId = NULL)
     {
@@ -148,10 +185,10 @@ class TelegramMessenger implements TelegramMessengerInterface
     /**
      * Function getChatId
      *
-     * @return int|mixed|string|null
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 2019-08-04 03:00
-     *
+     * @return int|string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 04/01/2021 16:30
      */
     public function getChatId()
     {
@@ -166,9 +203,9 @@ class TelegramMessenger implements TelegramMessengerInterface
      * @param null $fileAttachment
      *
      * @return $this
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 2019-08-04 03:37
-     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 04/01/2021 16:26
      */
     public function setFileAttachment($fileAttachment = NULL)
     {
@@ -181,9 +218,9 @@ class TelegramMessenger implements TelegramMessengerInterface
      * Function getFileAttachment
      *
      * @return string|null
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 2019-08-04 03:37
-     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 04/01/2021 16:23
      */
     public function getFileAttachment()
     {
@@ -197,10 +234,10 @@ class TelegramMessenger implements TelegramMessengerInterface
      *
      * @param null $message
      *
-     * @return $this|mixed|\nguyenanhung\TelegramMessenger\TelegramMessengerInterface
+     * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 9/5/19 56:19
+     * @time     : 04/01/2021 16:20
      */
     public function setMessage($message = NULL)
     {
@@ -213,9 +250,9 @@ class TelegramMessenger implements TelegramMessengerInterface
      * Function getMessage
      *
      * @return string|null
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 2019-08-04 03:00
-     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 04/01/2021 16:17
      */
     public function getMessage()
     {
@@ -227,10 +264,10 @@ class TelegramMessenger implements TelegramMessengerInterface
     /**
      * Function sendMessage
      *
-     * @return bool
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 2019-08-04 02:59
-     *
+     * @return bool|string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 04/01/2021 16:14
      */
     public function sendMessage()
     {
@@ -266,7 +303,9 @@ class TelegramMessenger implements TelegramMessengerInterface
                 $chatId = NULL;
             }
         }
+
         $textMessage = !empty($this->message) ? $this->message : NULL;
+
         if (empty($chatId) || empty($textMessage)) {
             $responseMsg = self::_CLASS_NAME_ . ' -> Không xác định được chủ đề cuộc trò chuyện và nội dung gửi đi. ChatID: ' . $chatId . ' - TextMessage: ' . $textMessage;
             if (function_exists('log_message')) {
@@ -279,7 +318,7 @@ class TelegramMessenger implements TelegramMessengerInterface
         // Thiết lập Endpoint và Tham số gửi tin đi
         $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_SEND_MESSAGE;
         $params      = array('text' => $textMessage, 'chat_id' => $chatId);
-        $sendRequest = $this->sendRequest($endpoint, $params);
+        $sendRequest = self::__sendRequest($endpoint, $params);
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
@@ -310,10 +349,10 @@ class TelegramMessenger implements TelegramMessengerInterface
     /**
      * Function sendPhoto
      *
-     * @return bool|mixed
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 2019-08-04 03:23
-     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 04/01/2021 16:12
      */
     public function sendPhoto()
     {
@@ -363,7 +402,7 @@ class TelegramMessenger implements TelegramMessengerInterface
         // Thiết lập Endpoint và Tham số gửi tin đi
         $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_SEND_PHOTO;
         $params      = array('photo' => $photo, 'chat_id' => $chatId, 'caption' => $caption);
-        $sendRequest = $this->sendRequest($endpoint, $params);
+        $sendRequest = self::__sendRequest($endpoint, $params);
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
@@ -394,10 +433,10 @@ class TelegramMessenger implements TelegramMessengerInterface
     /**
      * Function sendAudio
      *
-     * @return bool|mixed
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 2019-08-04 03:30
-     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 04/01/2021 16:08
      */
     public function sendAudio()
     {
@@ -447,7 +486,7 @@ class TelegramMessenger implements TelegramMessengerInterface
         // Thiết lập Endpoint và Tham số gửi tin đi
         $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_SEND_AUDIO;
         $params      = array('audio' => $audio, 'chat_id' => $chatId, 'caption' => $caption);
-        $sendRequest = $this->sendRequest($endpoint, $params);
+        $sendRequest = self::__sendRequest($endpoint, $params);
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
@@ -478,10 +517,10 @@ class TelegramMessenger implements TelegramMessengerInterface
     /**
      * Function sendVideo
      *
-     * @return bool|mixed
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 2019-08-04 03:33
-     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 04/01/2021 16:05
      */
     public function sendVideo()
     {
@@ -531,7 +570,7 @@ class TelegramMessenger implements TelegramMessengerInterface
         // Thiết lập Endpoint và Tham số gửi tin đi
         $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_SEND_VIDEO;
         $params      = array('video' => $video, 'chat_id' => $chatId, 'caption' => $caption);
-        $sendRequest = $this->sendRequest($endpoint, $params);
+        $sendRequest = self::__sendRequest($endpoint, $params);
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
@@ -562,10 +601,10 @@ class TelegramMessenger implements TelegramMessengerInterface
     /**
      * Function sendDocument
      *
-     * @return bool|mixed
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 2019-08-04 03:35
-     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 04/01/2021 16:01
      */
     public function sendDocument()
     {
@@ -615,7 +654,7 @@ class TelegramMessenger implements TelegramMessengerInterface
         // Thiết lập Endpoint và Tham số gửi tin đi
         $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_SEND_DOCUMENT;
         $params      = array('document' => $document, 'chat_id' => $chatId, 'caption' => $caption);
-        $sendRequest = $this->sendRequest($endpoint, $params);
+        $sendRequest = self::__sendRequest($endpoint, $params);
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
