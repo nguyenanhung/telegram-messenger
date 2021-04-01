@@ -77,7 +77,7 @@ Mặc định, package cung cấp 1 class cho việc gửi tin đi với 4 metho
  * Date: 9/5/19
  * Time: 11:00
  */
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use nguyenanhung\TelegramMessenger\TelegramMessenger;
 
@@ -85,21 +85,32 @@ $telegram = new TelegramMessenger();
 
 // Khai báo biến chứa data config
 // Đường dẫn tới file cấu hình, hoặc có thể config 1 array và gán cho biến config
-$config   = include __DIR__ . '/samle_config.php'; 
+$config = include __DIR__ . '/sample_config.php';
+
+// Get Version
+echo "<pre>";
+print_r($telegram->getVersion());
+echo "</pre>";
 
 // Truyền config vào class Telegram
 $telegram->setSdkConfig($config);
+echo "<pre>";
+print_r($telegram->getSdkConfig());
+echo "</pre>";
 
 // Gắn cấu hình Chat_ID và Nội dung cần gửi tin đi
 $telegram->setChatId('xxx')
-    ->setMessage('Test via PHP');
+         ->setMessage('Test via PHP');
 
 // Gửi tin tới người nhận
 // Result == TRUE nếu gửi tin thành công
 // ngược lại là thất bại
 $result = $telegram->sendMessage();
 
-d($result);
+echo "<pre>";
+print_r($result);
+echo "</pre>";
+
 ```
 
 @see: https://github.com/nguyenanhung/telegram-messenger/blob/master/sample/example.php
@@ -142,18 +153,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 // Khai báo biến chứa data config
 // Đường dẫn tới file cấu hình, hoặc có thể config 1 array và gán cho biến config
-$config = array(
-    // Telegram Messenger
-    'telegram_messages' => array(
-        'bot_name'        => 'xxx',
-        'bot_api_key'     => 'xxx',
-        'default_chat_id' => 1234,
-    )
-);
-
+$config = include __DIR__ . '/sample_config.php';
 
 // Khai báo Chat_ID
-$chat_id = 474860058;
+$chat_id = -387151297;
 
 // Khai báo nội dung cần gửi đi
 $message = 'Test gửi tin';
@@ -163,7 +166,9 @@ $message = 'Test gửi tin';
 // ngược lại là thất bại
 $result = telegram_simple_message($config, $chat_id, $message);
 
-d($result);
+echo "<pre>";
+print_r($result);
+echo "</pre>";
 ```
 
 @see: https://github.com/nguyenanhung/telegram-messenger/blob/master/sample/example_with_helper.php
