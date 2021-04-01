@@ -1,3 +1,8 @@
+[![Latest Stable Version](https://poser.pugx.org/nguyenanhung/telegram-messenger/v/stable)](https://packagist.org/packages/nguyenanhung/telegram-messenger)
+[![Total Downloads](https://poser.pugx.org/nguyenanhung/telegram-messenger/downloads)](https://packagist.org/packages/nguyenanhung/telegram-messenger)
+[![Latest Unstable Version](https://poser.pugx.org/nguyenanhung/telegram-messenger/v/unstable)](https://packagist.org/packages/nguyenanhung/telegram-messenger)
+[![composer.lock](https://poser.pugx.org/nguyenanhung/telegram-messenger/composerlock)](https://packagist.org/packages/nguyenanhung/telegram-messenger)
+[![License](https://poser.pugx.org/nguyenanhung/telegram-messenger/license)](https://packagist.org/packages/nguyenanhung/telegram-messenger)
 # Telegram Messenger
 
 Các phương thức hỗ trợ
