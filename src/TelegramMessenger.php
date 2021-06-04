@@ -23,6 +23,7 @@ class TelegramMessenger
     const VERSION                       = '1.0.7';
     const TELEGRAM_MESSENGER_CONFIG_KEY = 'telegram_messages';
     const TELEGRAM_API                  = 'https://api.telegram.org/bot';
+    const METHOD_GET_ME                 = '/getMe';
     const METHOD_GET_UPDATES            = '/getUpdates';
     const METHOD_SEND_MESSAGE           = '/sendMessage';
     const METHOD_SEND_PHOTO             = '/sendPhoto';
@@ -92,38 +93,6 @@ class TelegramMessenger
         return $this->sdkConfig;
     }
 
-    /**
-     * Function sendRequest - Hàm request tới Endpoint sử dụng phương thức GET, thư viện cURL với TLS v1.2
-     *
-     * @param string $url     URL Endpoint cần gọi
-     * @param array  $params  Data Params cần truyền dữ liệu
-     * @param int    $timeout Thời gian chờ phản hồi dữ liệu tối đa
-     *
-     * @return bool|string
-     * @author   : 713uk13m <dev@nguyenanhung.com>
-     * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 04/01/2021 00:35
-     */
-    private function __sendRequest($url = '', $params = array(), $timeout = 30)
-    {
-        $endpoint = $url . '?' . http_build_query($params);
-        $curl     = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL            => $endpoint,
-            CURLOPT_RETURNTRANSFER => TRUE,
-            CURLOPT_ENCODING       => "",
-            CURLOPT_MAXREDIRS      => 10,
-            CURLOPT_TIMEOUT        => $timeout,
-            CURLOPT_FOLLOWLOCATION => TRUE,
-            CURLOPT_SSLVERSION     => CURL_SSLVERSION_TLSv1_2,
-            CURLOPT_CUSTOMREQUEST  => "POST",
-        ));
-        $result = curl_exec($curl);
-        curl_close($curl);
-
-        return $result;
-    }
-
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Bot Updates ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
     /**
@@ -151,7 +120,46 @@ class TelegramMessenger
 
         // Thiết lập Endpoint và Tham số gửi tin đi
         $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_GET_UPDATES;
-        $sendRequest = self::__sendRequest($endpoint);
+        $sendRequest = Helper::sendRequest($endpoint);
+        $res         = json_decode(trim($sendRequest));
+
+        // Get Updates thành công
+        if ((isset($res->ok) && ($res->ok == TRUE)) && isset($res->result)) {
+            return $res;
+        }
+
+        // Default returns Error Message
+        return $errorResponse;
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Bot ME ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
+
+    /**
+     * Function getMe
+     *
+     * @return bool[]|mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 06/04/2021 51:20
+     */
+    public function getMe()
+    {
+        $errorResponse = array('error' => TRUE);
+        if (!isset($this->sdkConfig[self::TELEGRAM_MESSENGER_CONFIG_KEY])) {
+            return $errorResponse;
+        }
+
+        // Cấu hình SDK
+        $sdkConfig = $this->sdkConfig[self::TELEGRAM_MESSENGER_CONFIG_KEY];
+
+        // Xác định API Key
+        if (!isset($sdkConfig['bot_api_key'])) {
+            return $errorResponse;
+        }
+
+        // Thiết lập Endpoint và Tham số gửi tin đi
+        $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_GET_ME;
+        $sendRequest = Helper::sendRequest($endpoint);
         $res         = json_decode(trim($sendRequest));
 
         // Get Updates thành công
@@ -369,7 +377,7 @@ class TelegramMessenger
         // Thiết lập Endpoint và Tham số gửi tin đi
         $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_SEND_MESSAGE;
         $params      = array('text' => $textMessage, 'chat_id' => $chatId);
-        $sendRequest = self::__sendRequest($endpoint, $params);
+        $sendRequest = Helper::sendRequest($endpoint, $params);
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
@@ -446,7 +454,7 @@ class TelegramMessenger
         // Thiết lập Endpoint và Tham số gửi tin đi
         $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_SEND_PHOTO;
         $params      = array('photo' => $photo, 'chat_id' => $chatId, 'caption' => $caption);
-        $sendRequest = self::__sendRequest($endpoint, $params);
+        $sendRequest = Helper::sendRequest($endpoint, $params);
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
@@ -522,7 +530,7 @@ class TelegramMessenger
         // Thiết lập Endpoint và Tham số gửi tin đi
         $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_SEND_AUDIO;
         $params      = array('audio' => $audio, 'chat_id' => $chatId, 'caption' => $caption);
-        $sendRequest = self::__sendRequest($endpoint, $params);
+        $sendRequest = Helper::sendRequest($endpoint, $params);
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
@@ -598,7 +606,7 @@ class TelegramMessenger
         // Thiết lập Endpoint và Tham số gửi tin đi
         $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_SEND_VIDEO;
         $params      = array('video' => $video, 'chat_id' => $chatId, 'caption' => $caption);
-        $sendRequest = self::__sendRequest($endpoint, $params);
+        $sendRequest = Helper::sendRequest($endpoint, $params);
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
@@ -674,7 +682,7 @@ class TelegramMessenger
         // Thiết lập Endpoint và Tham số gửi tin đi
         $endpoint    = self::TELEGRAM_API . $sdkConfig['bot_api_key'] . self::METHOD_SEND_DOCUMENT;
         $params      = array('document' => $document, 'chat_id' => $chatId, 'caption' => $caption);
-        $sendRequest = self::__sendRequest($endpoint, $params);
+        $sendRequest = Helper::sendRequest($endpoint, $params);
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
