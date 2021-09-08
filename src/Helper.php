@@ -37,11 +37,11 @@ class Helper
         $curl     = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL            => $endpoint,
-            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING       => "",
             CURLOPT_MAXREDIRS      => 10,
             CURLOPT_TIMEOUT        => $timeout,
-            CURLOPT_FOLLOWLOCATION => TRUE,
+            CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_SSLVERSION     => CURL_SSLVERSION_TLSv1_2,
             CURLOPT_CUSTOMREQUEST  => "POST",
         ));

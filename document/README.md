@@ -6,7 +6,9 @@ Tài liệu được xây dựng nhằm mục đích hướng dẫn sử dụng 
 
 Class được xây dựng theo chuẩn Composer PSR-4, vì vậy có thể setup nhanh qua composer với câu lệnh như sau
 
-> composer require nguyenanhung/telegram-messenger
+```shell
+composer require nguyenanhung/telegram-messenger
+```
 
 ```php
 <?php
@@ -51,7 +53,8 @@ return array(
 
 ### B3: Sử dụng
 
-Để sử dụng, có thể tham khảo qua bài viết https://tungvandev.github.io/2019-08-17/teletegram-ung-dung-trong-theo-doi-service/ để hiểu rõ hơn về luồng hoạt động và cấu trúc gửi tin đi. Phần hướng dẫn ở đây sẽ hướng dẫn trực tiếp cho việc cấu hình code để có thể gửi tin đi.
+Để sử dụng, có thể tham khảo qua bài viết https://tungvandev.github.io/2019-08-17/teletegram-ung-dung-trong-theo-doi-service/ để hiểu rõ hơn về luồng hoạt động và cấu trúc gửi tin đi. Phần hướng dẫn ở đây sẽ hướng dẫn trực tiếp cho việc cấu hình code
+để có thể gửi tin đi.
 
 #### Gửi tin qua class TelegramMessenger
 
@@ -173,9 +176,8 @@ echo "</pre>";
 
 @see: https://github.com/nguyenanhung/telegram-messenger/blob/master/sample/example_with_helper.php
 
-
 ## Contact
 
-| STT  | Họ tên         | SĐT           | Email           | Skype            |
-| ---- | -------------- | ------------- | --------------- | ---------------- |
-| 1    | Hung Nguyen | 033.295.3760 | dev@nguyenanhung.com | nguyenanhung5891 |
+| STT  | Họ tên         | Email                | Skype            |
+| ---- | -------------- | -------------------- | ---------------- |
+| 1    | Hung Nguyen    | dev@nguyenanhung.com | nguyenanhung5891 |

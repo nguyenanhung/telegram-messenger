@@ -20,7 +20,7 @@ namespace nguyenanhung\TelegramMessenger;
 class TelegramMessenger
 {
     const _CLASS_NAME_                  = 'TelegramMessenger';
-    const VERSION                       = '1.0.7';
+    const VERSION                       = '1.0.8';
     const TELEGRAM_MESSENGER_CONFIG_KEY = 'telegram_messages';
     const TELEGRAM_API                  = 'https://api.telegram.org/bot';
     const METHOD_GET_ME                 = '/getMe';
@@ -33,12 +33,15 @@ class TelegramMessenger
 
     /** @var array|null SDK Config */
     protected $sdkConfig;
+
     /** @var null|string|int ChatID */
-    protected $chatId = NULL;
+    protected $chatId = null;
+
     /** @var null|string Text Message */
-    protected $message = NULL;
+    protected $message = null;
+
     /** @var null|string File Attachment content */
-    protected $fileAttachment = NULL;
+    protected $fileAttachment = null;
 
     /**
      * TelegramMessenger constructor.
@@ -105,7 +108,7 @@ class TelegramMessenger
      */
     public function getBotUpdates()
     {
-        $errorResponse = array('error' => TRUE);
+        $errorResponse = array('error' => true);
         if (!isset($this->sdkConfig[self::TELEGRAM_MESSENGER_CONFIG_KEY])) {
             return $errorResponse;
         }
@@ -124,7 +127,7 @@ class TelegramMessenger
         $res         = json_decode(trim($sendRequest));
 
         // Get Updates thành công
-        if ((isset($res->ok) && ($res->ok == TRUE)) && isset($res->result)) {
+        if ((isset($res->ok) && ($res->ok == true)) && isset($res->result)) {
             return $res;
         }
 
@@ -144,7 +147,7 @@ class TelegramMessenger
      */
     public function getMe()
     {
-        $errorResponse = array('error' => TRUE);
+        $errorResponse = array('error' => true);
         if (!isset($this->sdkConfig[self::TELEGRAM_MESSENGER_CONFIG_KEY])) {
             return $errorResponse;
         }
@@ -163,7 +166,7 @@ class TelegramMessenger
         $res         = json_decode(trim($sendRequest));
 
         // Get Updates thành công
-        if ((isset($res->ok) && ($res->ok == TRUE)) && isset($res->result)) {
+        if ((isset($res->ok) && ($res->ok == true)) && isset($res->result)) {
             return $res;
         }
 
@@ -183,7 +186,7 @@ class TelegramMessenger
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 16:33
      */
-    public function setChatId($chatId = NULL)
+    public function setChatId($chatId = null)
     {
         $this->chatId = $chatId;
 
@@ -222,7 +225,7 @@ class TelegramMessenger
             return (string) $sdkConfig['default_chat_id'];
         }
 
-        return NULL;
+        return null;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FileAttachment ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
@@ -237,7 +240,7 @@ class TelegramMessenger
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 16:26
      */
-    public function setFileAttachment($fileAttachment = NULL)
+    public function setFileAttachment($fileAttachment = null)
     {
         $this->fileAttachment = $fileAttachment;
 
@@ -271,7 +274,7 @@ class TelegramMessenger
             return $this->fileAttachment;
         }
 
-        return NULL;
+        return null;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Message ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
@@ -286,7 +289,7 @@ class TelegramMessenger
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 16:20
      */
-    public function setMessage($message = NULL)
+    public function setMessage($message = null)
     {
         $this->message = $message;
 
@@ -311,12 +314,12 @@ class TelegramMessenger
      *
      * @param null $defaultMessage
      *
-     * @return mixed|string|null
+     * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 04/01/2021 34:48
+     * @time     : 09/09/2021 14:33
      */
-    public function implementMessage($defaultMessage = NULL)
+    public function implementMessage($defaultMessage = null)
     {
         if (!empty($this->message)) {
             return $this->message;
@@ -343,7 +346,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Cấu hình SDK
@@ -356,7 +359,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Xác định tham số gửi tin đi
@@ -371,7 +374,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Thiết lập Endpoint và Tham số gửi tin đi
@@ -381,7 +384,7 @@ class TelegramMessenger
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
-        if ($res == NULL) {
+        if ($res == null) {
             // Không Decode được mã trả về
             $responseMsg = self::_CLASS_NAME_ . ' -> Không xác định được mã trả về!';
             if (function_exists('log_message')) {
@@ -392,7 +395,7 @@ class TelegramMessenger
         }
 
         // Trường hợp gửi tin nhắn thành công
-        if ((isset($res->ok) && ($res->ok == TRUE)) && isset($res->result)) {
+        if ((isset($res->ok) && ($res->ok == true)) && isset($res->result)) {
             // Gửi tin nhắn thành công
             $responseMsg = self::_CLASS_NAME_ . ' -> ' . self::METHOD_SEND_MESSAGE . ' Success with Params -> ' . json_encode($params);
             if (function_exists('log_message')) {
@@ -421,7 +424,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Cấu hình SDK
@@ -434,7 +437,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Xác định tham số gửi tin đi
@@ -448,7 +451,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Thiết lập Endpoint và Tham số gửi tin đi
@@ -458,28 +461,28 @@ class TelegramMessenger
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
-        if ($res == NULL) {
+        if ($res == null) {
             // Không Decode được mã trả về
             $responseMsg = self::_CLASS_NAME_ . ' -> Không xác định được mã trả về!';
             if (function_exists('log_message')) {
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Trường hợp gửi tin nhắn thành công
-        if ((isset($res->ok) && ($res->ok == TRUE)) && isset($res->result)) {
+        if ((isset($res->ok) && ($res->ok == true)) && isset($res->result)) {
             // Gửi tin nhắn thành công
             $responseMsg = self::_CLASS_NAME_ . ' -> ' . self::METHOD_SEND_PHOTO . ' Success with Params -> ' . json_encode($params);
             if (function_exists('log_message')) {
                 log_message('debug', $responseMsg);
             }
 
-            return TRUE;
+            return true;
         }
 
-        return FALSE;
+        return false;
     }
 
     /**
@@ -498,7 +501,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Cấu hình SDK
@@ -511,7 +514,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Xác định tham số gửi tin đi
@@ -524,7 +527,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Thiết lập Endpoint và Tham số gửi tin đi
@@ -534,28 +537,28 @@ class TelegramMessenger
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
-        if ($res == NULL) {
+        if ($res == null) {
             // Không Decode được mã trả về
             $responseMsg = self::_CLASS_NAME_ . ' -> Không xác định được mã trả về!';
             if (function_exists('log_message')) {
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Trường hợp gửi tin nhắn thành công
-        if ((isset($res->ok) && ($res->ok == TRUE)) && isset($res->result)) {
+        if ((isset($res->ok) && ($res->ok == true)) && isset($res->result)) {
             // Gửi tin nhắn thành công
             $responseMsg = self::_CLASS_NAME_ . ' -> ' . self::METHOD_SEND_AUDIO . ' Success with Params -> ' . json_encode($params);
             if (function_exists('log_message')) {
                 log_message('debug', $responseMsg);
             }
 
-            return TRUE;
+            return true;
         }
 
-        return FALSE;
+        return false;
     }
 
     /**
@@ -574,7 +577,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Cấu hình SDK
@@ -587,7 +590,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Xác định tham số gửi tin đi
@@ -600,7 +603,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Thiết lập Endpoint và Tham số gửi tin đi
@@ -610,28 +613,28 @@ class TelegramMessenger
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
-        if ($res == NULL) {
+        if ($res == null) {
             // Không Decode được mã trả về
             $responseMsg = self::_CLASS_NAME_ . ' -> Không xác định được mã trả về!';
             if (function_exists('log_message')) {
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Trường hợp gửi tin nhắn thành công
-        if ((isset($res->ok) && ($res->ok == TRUE)) && isset($res->result)) {
+        if ((isset($res->ok) && ($res->ok == true)) && isset($res->result)) {
             // Gửi tin nhắn thành công
             $responseMsg = self::_CLASS_NAME_ . ' -> ' . self::METHOD_SEND_VIDEO . ' Success with Params -> ' . json_encode($params);
             if (function_exists('log_message')) {
                 log_message('debug', $responseMsg);
             }
 
-            return TRUE;
+            return true;
         }
 
-        return FALSE;
+        return false;
     }
 
     /**
@@ -650,7 +653,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Cấu hình SDK
@@ -663,7 +666,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Xác định tham số gửi tin đi
@@ -676,7 +679,7 @@ class TelegramMessenger
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Thiết lập Endpoint và Tham số gửi tin đi
@@ -686,27 +689,27 @@ class TelegramMessenger
         $res         = json_decode(trim($sendRequest));
 
         // Nếu không xác định được nội dung trả về
-        if ($res == NULL) {
+        if ($res == null) {
             // Không Decode được mã trả về
             $responseMsg = self::_CLASS_NAME_ . ' -> Không xác định được mã trả về!';
             if (function_exists('log_message')) {
                 log_message('error', $responseMsg);
             }
 
-            return FALSE;
+            return false;
         }
 
         // Trường hợp gửi tin nhắn thành công
-        if ((isset($res->ok) && ($res->ok == TRUE)) && isset($res->result)) {
+        if ((isset($res->ok) && ($res->ok == true)) && isset($res->result)) {
             // Gửi tin nhắn thành công
             $responseMsg = self::_CLASS_NAME_ . ' -> ' . self::METHOD_SEND_DOCUMENT . ' Success with Params -> ' . json_encode($params);
             if (function_exists('log_message')) {
                 log_message('debug', $responseMsg);
             }
 
-            return TRUE;
+            return true;
         }
 
-        return FALSE;
+        return false;
     }
 }
