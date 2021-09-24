@@ -20,7 +20,7 @@ namespace nguyenanhung\TelegramMessenger;
 class TelegramMessenger
 {
     const _CLASS_NAME_                  = 'TelegramMessenger';
-    const VERSION                       = '1.1.0';
+    const VERSION                       = '2.0.0';
     const TELEGRAM_MESSENGER_CONFIG_KEY = 'telegram_messages';
     const TELEGRAM_API                  = 'https://api.telegram.org/bot';
     const METHOD_GET_ME                 = '/getMe';
@@ -61,7 +61,7 @@ class TelegramMessenger
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 03:40
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return self::VERSION;
     }
@@ -76,7 +76,7 @@ class TelegramMessenger
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 16:47
      */
-    public function setSdkConfig($sdkConfig = array())
+    public function setSdkConfig(array $sdkConfig = array()): TelegramMessenger
     {
         $this->sdkConfig = $sdkConfig;
 
@@ -186,7 +186,7 @@ class TelegramMessenger
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 16:33
      */
-    public function setChatId($chatId = null)
+    public function setChatId($chatId = null): TelegramMessenger
     {
         $this->chatId = $chatId;
 
@@ -240,7 +240,7 @@ class TelegramMessenger
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 16:26
      */
-    public function setFileAttachment($fileAttachment = null)
+    public function setFileAttachment($fileAttachment = null): TelegramMessenger
     {
         $this->fileAttachment = $fileAttachment;
 
@@ -289,7 +289,7 @@ class TelegramMessenger
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 16:20
      */
-    public function setMessage($message = null)
+    public function setMessage($message = null): TelegramMessenger
     {
         $this->message = $message;
 
@@ -416,7 +416,7 @@ class TelegramMessenger
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 16:12
      */
-    public function sendPhoto()
+    public function sendPhoto(): bool
     {
         if (!isset($this->sdkConfig[self::TELEGRAM_MESSENGER_CONFIG_KEY])) {
             $responseMsg = self::_CLASS_NAME_ . ' -> Không tìm thấy cấu hình Telegram Messenger';
@@ -493,7 +493,7 @@ class TelegramMessenger
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 16:08
      */
-    public function sendAudio()
+    public function sendAudio(): bool
     {
         if (!isset($this->sdkConfig[self::TELEGRAM_MESSENGER_CONFIG_KEY])) {
             $responseMsg = self::_CLASS_NAME_ . ' -> Không tìm thấy cấu hình Telegram Messenger';
@@ -569,7 +569,7 @@ class TelegramMessenger
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 16:05
      */
-    public function sendVideo()
+    public function sendVideo(): bool
     {
         if (!isset($this->sdkConfig[self::TELEGRAM_MESSENGER_CONFIG_KEY])) {
             $responseMsg = self::_CLASS_NAME_ . ' -> Không tìm thấy cấu hình Telegram Messenger';
@@ -645,7 +645,7 @@ class TelegramMessenger
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 16:01
      */
-    public function sendDocument()
+    public function sendDocument(): bool
     {
         if (!isset($this->sdkConfig[self::TELEGRAM_MESSENGER_CONFIG_KEY])) {
             $responseMsg = self::_CLASS_NAME_ . ' -> Không tìm thấy cấu hình Telegram Messenger';

@@ -21,7 +21,7 @@ if (!function_exists('telegram_simple_message')) {
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 04/01/2021 58:50
      */
-    function telegram_simple_message($config = array(), $chat_id = '', $message = '')
+    function telegram_simple_message(array $config = array(), string $chat_id = '', string $message = ''): bool
     {
         $telegram = new nguyenanhung\TelegramMessenger\TelegramMessenger();
         $telegram->setSdkConfig($config)->setChatId($chat_id)->setMessage($message);
