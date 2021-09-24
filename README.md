@@ -16,6 +16,11 @@ Các phương thức hỗ trợ
 - [x] SendVideo via ChatID
 - [x] SendDocument via ChatID
 
+## Version
+
+- [x] V1.x support all PHP version `>=5.6`
+- [x] V2.x support all PHP version `>=7.0`
+
 ## Concept
 
 Toàn bộ concept cho class được chia sẻ tại đây: https://blog.nguyenanhung.com/2019/08/telegram-bot-ung-dung-trong-monitoring.html
