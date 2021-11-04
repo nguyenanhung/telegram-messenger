@@ -35,7 +35,7 @@ class Helper
     {
         $endpoint = $url . '?' . http_build_query($params);
         $curl     = curl_init();
-        curl_setopt_array($curl, array(
+        curl_setopt_array($curl, [
             CURLOPT_URL            => $endpoint,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING       => "",
@@ -43,8 +43,8 @@ class Helper
             CURLOPT_TIMEOUT        => $timeout,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_SSLVERSION     => CURL_SSLVERSION_TLSv1_2,
-            CURLOPT_CUSTOMREQUEST  => "POST",
-        ));
+            CURLOPT_CUSTOMREQUEST  => "POST"
+        ]);
         $result = curl_exec($curl);
         curl_close($curl);
 
