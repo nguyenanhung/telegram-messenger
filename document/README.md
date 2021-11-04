@@ -53,7 +53,7 @@ return array(
 
 ### B3: Sử dụng
 
-Để sử dụng, có thể tham khảo qua bài viết https://tungvandev.github.io/2019-08-17/teletegram-ung-dung-trong-theo-doi-service/ để hiểu rõ hơn về luồng hoạt động và cấu trúc gửi tin đi. Phần hướng dẫn ở đây sẽ hướng dẫn trực tiếp cho việc cấu hình code
+Để sử dụng, có thể tham khảo qua bài viết https://blog.nguyenanhung.com/2019/08/telegram-bot-ung-dung-trong-monitoring.html để hiểu rõ hơn về luồng hoạt động và cấu trúc gửi tin đi. Phần hướng dẫn ở đây sẽ hướng dẫn trực tiếp cho việc cấu hình code
 để có thể gửi tin đi.
 
 #### Gửi tin qua class TelegramMessenger

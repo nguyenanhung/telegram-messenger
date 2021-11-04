@@ -20,7 +20,7 @@ namespace nguyenanhung\TelegramMessenger;
 class TelegramMessenger
 {
     const _CLASS_NAME_                  = 'TelegramMessenger';
-    const VERSION                       = '1.1.0';
+    const VERSION                       = '1.1.1';
     const TELEGRAM_MESSENGER_CONFIG_KEY = 'telegram_messages';
     const TELEGRAM_API                  = 'https://api.telegram.org/bot';
     const METHOD_GET_ME                 = '/getMe';
