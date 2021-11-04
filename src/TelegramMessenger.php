@@ -20,7 +20,7 @@ namespace nguyenanhung\TelegramMessenger;
 class TelegramMessenger
 {
     const _CLASS_NAME_                  = 'TelegramMessenger';
-    const VERSION                       = '2.0.0';
+    const VERSION                       = '2.0.1';
     const TELEGRAM_MESSENGER_CONFIG_KEY = 'telegram_messages';
     const TELEGRAM_API                  = 'https://api.telegram.org/bot';
     const METHOD_GET_ME                 = '/getMe';
@@ -108,7 +108,7 @@ class TelegramMessenger
      */
     public function getBotUpdates()
     {
-        $errorResponse = array('error' => true);
+        $errorResponse = ['error' => true];
         if (!isset($this->sdkConfig[self::TELEGRAM_MESSENGER_CONFIG_KEY])) {
             return $errorResponse;
         }
@@ -147,7 +147,7 @@ class TelegramMessenger
      */
     public function getMe()
     {
-        $errorResponse = array('error' => true);
+        $errorResponse = ['error' => true];
         if (!isset($this->sdkConfig[self::TELEGRAM_MESSENGER_CONFIG_KEY])) {
             return $errorResponse;
         }
@@ -233,7 +233,7 @@ class TelegramMessenger
     /**
      * Function setFileAttachment
      *
-     * @param null $fileAttachment
+     * @param mixed $fileAttachment
      *
      * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -253,7 +253,7 @@ class TelegramMessenger
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 04/01/2021 16:23
+     * @time     : 11/04/2021 43:04
      */
     public function getFileAttachment()
     {
@@ -282,7 +282,7 @@ class TelegramMessenger
     /**
      * Function setMessage
      *
-     * @param null $message
+     * @param mixed $message
      *
      * @return $this
      * @author   : 713uk13m <dev@nguyenanhung.com>
@@ -291,6 +291,9 @@ class TelegramMessenger
      */
     public function setMessage($message = null): TelegramMessenger
     {
+        if (is_array($message) || is_object($message)) {
+            $message = json_encode($message);
+        }
         $this->message = $message;
 
         return $this;
@@ -312,14 +315,14 @@ class TelegramMessenger
     /**
      * Function implementMessage
      *
-     * @param null $defaultMessage
+     * @param string|null $defaultMessage
      *
      * @return string|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/09/2021 14:33
      */
-    public function implementMessage($defaultMessage = null)
+    public function implementMessage(string $defaultMessage = null)
     {
         if (!empty($this->message)) {
             return $this->message;
