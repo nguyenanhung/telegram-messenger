@@ -8,10 +8,10 @@
  * Time: 10:52
  */
 return array(
-    // Telegram Messenger
-    'telegram_messages' => array(
-        'bot_name'        => 'xxx',
-        'bot_api_key'     => 'xxx',
-        'default_chat_id' => 1234,
-    )
+	// Telegram Messenger
+	'telegram_messages' => array(
+		'bot_name' => 'xxx',
+		'bot_api_key' => 'xxx',
+		'default_chat_id' => 123,
+	)
 );

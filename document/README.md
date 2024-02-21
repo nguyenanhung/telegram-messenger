@@ -53,7 +53,9 @@ return array(
 
 ### B3: Sử dụng
 
-Để sử dụng, có thể tham khảo qua bài viết https://blog.nguyenanhung.com/2019/08/telegram-bot-ung-dung-trong-monitoring.html để hiểu rõ hơn về luồng hoạt động và cấu trúc gửi tin đi. Phần hướng dẫn ở đây sẽ hướng dẫn trực tiếp cho việc cấu hình code
+Để sử dụng, có thể tham khảo qua bài
+viết https://blog.nguyenanhung.com/2019/08/telegram-bot-ung-dung-trong-monitoring.html để hiểu rõ hơn về luồng hoạt động
+và cấu trúc gửi tin đi. Phần hướng dẫn ở đây sẽ hướng dẫn trực tiếp cho việc cấu hình code
 để có thể gửi tin đi.
 
 #### Gửi tin qua class TelegramMessenger
@@ -159,7 +161,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $config = include __DIR__ . '/sample_config.php';
 
 // Khai báo Chat_ID
-$chat_id = -387151297;
+$chat_id = -123;
 
 // Khai báo nội dung cần gửi đi
 $message = 'Test gửi tin';
@@ -178,6 +180,6 @@ echo "</pre>";
 
 ## Contact
 
-| STT  | Họ tên         | Email                | Skype            |
-| ---- | -------------- | -------------------- | ---------------- |
-| 1    | Hung Nguyen    | dev@nguyenanhung.com | nguyenanhung5891 |
+| STT | Name        | Email                | GitHub        |
+|-----|-------------|----------------------|---------------|
+| 1   | Hung Nguyen | dev@nguyenanhung.com | @nguyenanhung |
