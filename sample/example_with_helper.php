@@ -14,7 +14,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $config = include __DIR__ . '/sample_config.php';
 
 // Khai báo Chat_ID
-$chat_id = -387151297;
+$chat_id = $config['telegram_messages']['default_chat_id'];
 
 // Khai báo nội dung cần gửi đi
 $message = 'Test gửi tin';
