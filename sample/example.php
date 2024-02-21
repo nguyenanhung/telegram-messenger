@@ -29,8 +29,9 @@ print_r($telegram->getSdkConfig());
 echo "</pre>";
 
 // Gắn cấu hình Chat_ID và Nội dung cần gửi tin đi
-$telegram->setChatId('xxx')
-         ->setMessage('Test via PHP');
+$telegram->setChatId($config['telegram_messages']['default_chat_id'])
+	->parseModeMarkdown()
+	->setMessage('*Test via PHP v2x*');
 
 // Gửi tin tới người nhận
 // Result == TRUE nếu gửi tin thành công

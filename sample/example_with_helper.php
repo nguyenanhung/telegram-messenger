@@ -14,15 +14,15 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $config = include __DIR__ . '/sample_config.php';
 
 // Khai báo Chat_ID
-$chat_id = -387151297;
+$chat_id = $config['telegram_messages']['default_chat_id'];
 
 // Khai báo nội dung cần gửi đi
-$message = 'Test gửi tin';
+$message = 'Test gửi tin from *PHP helper v2x*';
 
 // Gửi tin tới người nhận
 // Result == TRUE nếu gửi tin thành công
 // ngược lại là thất bại
-$result = telegram_simple_message($config, $chat_id, $message);
+$result = telegram_simple_message($config, $chat_id, $message, true);
 
 echo "<pre>";
 print_r($result);
