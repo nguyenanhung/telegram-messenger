@@ -50,4 +50,34 @@ class Helper
 
 		return $result;
 	}
+
+	/**
+	 * Function writeLn
+	 *
+	 * @param        $message
+	 * @param string $newLine
+	 *
+	 * @author   : 713uk13m <dev@nguyenanhung.com>
+	 * @copyright: 713uk13m <dev@nguyenanhung.com>
+	 * @time     : 09/02/2021 42:50
+	 */
+	public static function writeLn($message, $newLine = "\n")
+	{
+		if (function_exists('json_encode') && (is_array($message) || is_object($message))) {
+			$message = json_encode($message);
+		}
+		echo $message . $newLine;
+	}
+
+	/**
+	 * Is CLI?
+	 *
+	 * Test to see if a request was made from the command line.
+	 *
+	 * @return    bool
+	 */
+	public static function isCLI()
+	{
+		return (PHP_SAPI === 'cli' or defined('STDIN'));
+	}
 }
