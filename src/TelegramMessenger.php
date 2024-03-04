@@ -22,7 +22,7 @@ class TelegramMessenger
 	use TelegramOptions;
 
 	const _CLASS_NAME_ = 'TelegramMessenger';
-	const VERSION = '1.1.2';
+	const VERSION = '1.1.3';
 	const TELEGRAM_MESSENGER_CONFIG_KEY = 'telegram_messages';
 	const TELEGRAM_API = 'https://api.telegram.org/bot';
 	const METHOD_GET_ME = '/getMe';

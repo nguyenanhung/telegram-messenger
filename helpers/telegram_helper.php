@@ -32,3 +32,20 @@ if (!function_exists('telegram_simple_message')) {
 		return $telegram->sendMessage();
 	}
 }
+if (!function_exists('telegram_console_deploy_message')) {
+	function telegram_console_deploy_message($token, $chat_id, $project, $stages, $url = '')
+	{
+		if (\nguyenanhung\TelegramMessenger\Helper::isCLI()) {
+			$project = trim($project);
+			$stages = strtoupper(trim($stages));
+			if (empty($url) && function_exists('base_url')) {
+				$url = base_url();
+			}
+			$message = $project . ' - ' . $stages . ' -> SUCCESS | On time ' . date('Y-m-d H:i:s') . ' | Visit: ' . $url;
+			$result = telegram_simple_message($token, $chat_id, 'CI/CD Monitoring - ' . $message);
+			$status = $result ? ' is Success!' : ' is Failed!';
+			\nguyenanhung\TelegramMessenger\Helper::writeLn("Send Message " . $message . " is " . $status);
+			exit();
+		}
+	}
+}
