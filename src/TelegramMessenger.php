@@ -22,7 +22,7 @@ class TelegramMessenger
     use TelegramOptions;
 
     const _CLASS_NAME_ = 'TelegramMessenger';
-    const VERSION = '1.1.5';
+    const VERSION = '1.1.6';
     const TELEGRAM_MESSENGER_CONFIG_KEY = 'telegram_messages';
     const TELEGRAM_API = 'https://api.telegram.org/bot';
     const METHOD_GET_ME = '/getMe';
@@ -331,7 +331,7 @@ class TelegramMessenger
     public function implementMessage($defaultMessage = null)
     {
         if (!empty($this->message)) {
-            return $this->message;
+            return Helper::telegramEscapeMessage($this->message, $this->parse_mode);
         }
 
         return $defaultMessage;
