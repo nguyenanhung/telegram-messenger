@@ -132,3 +132,6 @@ storage/cache/*
 !storage/cache/.htaccess
 !storage/cache/index.html
 /tests/demo_production.php
+
+.ide.php
+test.php
