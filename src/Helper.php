@@ -60,7 +60,7 @@ class Helper
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/02/2021 42:50
      */
-    public static function writeLn($message, $newLine = "\n")
+    public static function writeLn($message, string $newLine = "\n")
     {
         if (function_exists('json_encode') && (is_array($message) || is_object($message))) {
             $message = json_encode($message);
@@ -75,8 +75,43 @@ class Helper
      *
      * @return    bool
      */
-    public static function isCLI()
+    public static function isCLI(): bool
     {
         return (PHP_SAPI === 'cli' or defined('STDIN'));
+    }
+
+    public static function telegramEscapeMessage($message, $parse_mode = 'Markdown')
+    {
+        if ($parse_mode === 'Markdown' || $parse_mode === 'MarkdownV2') {
+            // Escape all special characters in Markdown
+            $escape_chars = [
+//                '_' => '\\_', // Underscore
+//                '*' => '\\*', // Asterisk
+                '[' => '\\[', // Open square bracket
+                ']' => '\\]', // Close square bracket
+                '(' => '\\(', // Open parenthesis
+                ')' => '\\)', // Close parenthesis
+                '~' => '\\~', // Tilde
+                '`' => '\\`', // Backtick
+                '>' => '\\>', // Greater than
+                '#' => '\\#', // Hash
+                '+' => '\\+', // Plus
+                '-' => '\\-', // Minus
+                '=' => '\\=', // Equal
+                '|' => '\\|', // Pipe
+                '{' => '\\{', // Open curly brace
+                '}' => '\\}', // Close curly brace
+                '.' => '\\.', // Dot
+                '!' => '\\!'  // Exclamation mark
+            ];
+
+            // Replace each special character in the message
+            $message = str_replace(array_keys($escape_chars), array_values($escape_chars), $message);
+        } elseif ($parse_mode === 'HTML') {
+            // Escape special characters in HTML using htmlspecialchars
+            $message = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
+        }
+
+        return $message;
     }
 }
