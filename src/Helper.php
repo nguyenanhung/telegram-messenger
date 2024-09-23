@@ -19,65 +19,99 @@ namespace nguyenanhung\TelegramMessenger;
  */
 class Helper
 {
-	/**
-	 * Function sendRequest - Hàm request tới Endpoint sử dụng phương thức GET, thư viện cURL với TLS v1.2
-	 *
-	 * @param string $url URL Endpoint cần gọi
-	 * @param array $params Data Params cần truyền dữ liệu
-	 * @param int $timeout Thời gian chờ phản hồi dữ liệu tối đa
-	 *
-	 * @return bool|string
-	 * @author   : 713uk13m <dev@nguyenanhung.com>
-	 * @copyright: 713uk13m <dev@nguyenanhung.com>
-	 * @time     : 04/01/2021 00:35
-	 */
-	public static function sendRequest(string $url = '', array $params = array(), int $timeout = 30)
-	{
-		$endpoint = $url . '?' . http_build_query($params);
-		$curl = curl_init();
-		curl_setopt_array($curl, [
-			CURLOPT_URL => $endpoint,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => "",
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => $timeout,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2,
-			CURLOPT_CUSTOMREQUEST => "POST"
-		]);
-		$result = curl_exec($curl);
-		curl_close($curl);
+    /**
+     * Function sendRequest - Hàm request tới Endpoint sử dụng phương thức GET, thư viện cURL với TLS v1.2
+     *
+     * @param string $url URL Endpoint cần gọi
+     * @param array $params Data Params cần truyền dữ liệu
+     * @param int $timeout Thời gian chờ phản hồi dữ liệu tối đa
+     *
+     * @return bool|string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 04/01/2021 00:35
+     */
+    public static function sendRequest(string $url = '', array $params = array(), int $timeout = 30)
+    {
+        $endpoint = $url . '?' . http_build_query($params);
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $endpoint,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => $timeout,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2,
+            CURLOPT_CUSTOMREQUEST => "POST"
+        ]);
+        $result = curl_exec($curl);
+        curl_close($curl);
+        return $result;
+    }
 
-		return $result;
-	}
+    /**
+     * Function writeLn
+     *
+     * @param        $message
+     * @param string $newLine
+     *
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/02/2021 42:50
+     */
+    public static function writeLn($message, string $newLine = "\n")
+    {
+        if (function_exists('json_encode') && (is_array($message) || is_object($message))) {
+            $message = json_encode($message);
+        }
+        echo $message . $newLine;
+    }
 
-	/**
-	 * Function writeLn
-	 *
-	 * @param        $message
-	 * @param string $newLine
-	 *
-	 * @author   : 713uk13m <dev@nguyenanhung.com>
-	 * @copyright: 713uk13m <dev@nguyenanhung.com>
-	 * @time     : 09/02/2021 42:50
-	 */
-	public static function writeLn($message, $newLine = "\n")
-	{
-		if (function_exists('json_encode') && (is_array($message) || is_object($message))) {
-			$message = json_encode($message);
-		}
-		echo $message . $newLine;
-	}
+    /**
+     * Is CLI?
+     *
+     * Test to see if a request was made from the command line.
+     *
+     * @return    bool
+     */
+    public static function isCLI(): bool
+    {
+        return (PHP_SAPI === 'cli' or defined('STDIN'));
+    }
 
-	/**
-	 * Is CLI?
-	 *
-	 * Test to see if a request was made from the command line.
-	 *
-	 * @return    bool
-	 */
-	public static function isCLI()
-	{
-		return (PHP_SAPI === 'cli' or defined('STDIN'));
-	}
+    public static function telegramEscapeMessage($message, $parse_mode = 'Markdown')
+    {
+        if ($parse_mode === 'Markdown' || $parse_mode === 'MarkdownV2') {
+            // Escape all special characters in Markdown
+            $escape_chars = [
+//                '_' => '\\_', // Underscore
+//                '*' => '\\*', // Asterisk
+                '[' => '\\[', // Open square bracket
+                ']' => '\\]', // Close square bracket
+                '(' => '\\(', // Open parenthesis
+                ')' => '\\)', // Close parenthesis
+                '~' => '\\~', // Tilde
+                '`' => '\\`', // Backtick
+                '>' => '\\>', // Greater than
+                '#' => '\\#', // Hash
+                '+' => '\\+', // Plus
+                '-' => '\\-', // Minus
+                '=' => '\\=', // Equal
+                '|' => '\\|', // Pipe
+                '{' => '\\{', // Open curly brace
+                '}' => '\\}', // Close curly brace
+                '.' => '\\.', // Dot
+                '!' => '\\!'  // Exclamation mark
+            ];
+
+            // Replace each special character in the message
+            $message = str_replace(array_keys($escape_chars), array_values($escape_chars), $message);
+        } elseif ($parse_mode === 'HTML') {
+            // Escape special characters in HTML using htmlspecialchars
+            $message = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
+        }
+
+        return $message;
+    }
 }
