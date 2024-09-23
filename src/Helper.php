@@ -20,7 +20,7 @@ namespace nguyenanhung\TelegramMessenger;
 class Helper
 {
     /**
-     * Function sendRequest - Hàm request tới Endpoint sử dụng phương thức GET, thư viện cURL với TLS v1.2
+     * Function sendRequest - Hàm request tới Endpoint sử dụng phương thức POST, thư viện cURL với TLS v1.2
      *
      * @param string $url URL Endpoint cần gọi
      * @param array $params Data Params cần truyền dữ liệu
@@ -33,17 +33,17 @@ class Helper
      */
     public static function sendRequest(string $url = '', array $params = array(), int $timeout = 30)
     {
-        $endpoint = $url . '?' . http_build_query($params);
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => $endpoint,
+            CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => $timeout,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2,
-            CURLOPT_CUSTOMREQUEST => "POST"
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $params
         ]);
         $result = curl_exec($curl);
         curl_close($curl);
@@ -84,34 +84,59 @@ class Helper
     {
         if ($parse_mode === 'Markdown' || $parse_mode === 'MarkdownV2') {
             // Escape all special characters in Markdown
-            $escape_chars = [
-//                '_' => '\\_', // Underscore
-//                '*' => '\\*', // Asterisk
-                '[' => '\\[', // Open square bracket
-                ']' => '\\]', // Close square bracket
-                '(' => '\\(', // Open parenthesis
-                ')' => '\\)', // Close parenthesis
-                '~' => '\\~', // Tilde
-                '`' => '\\`', // Backtick
-                '>' => '\\>', // Greater than
-                '#' => '\\#', // Hash
-                '+' => '\\+', // Plus
-                '-' => '\\-', // Minus
-                '=' => '\\=', // Equal
-                '|' => '\\|', // Pipe
-                '{' => '\\{', // Open curly brace
-                '}' => '\\}', // Close curly brace
-                '.' => '\\.', // Dot
-                '!' => '\\!'  // Exclamation mark
-            ];
-
-            // Replace each special character in the message
-            $message = str_replace(array_keys($escape_chars), array_values($escape_chars), $message);
+            $message = self::markdown_escape_message($message);
         } elseif ($parse_mode === 'HTML') {
             // Escape special characters in HTML using htmlspecialchars
             $message = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
         }
-
         return $message;
+    }
+
+    public static function markdown_escape_message($message)
+    {
+        // Escape các ký tự đặc biệt trong Markdown của Telegram
+        $escape_chars_general = [
+//            '_' => '\\_', // Underscore
+//            '*' => '\\*', // Asterisk
+            '[' => '\\[', // Open square bracket
+            ']' => '\\]', // Close square bracket
+            '(' => '\\(', // Open parenthesis
+            ')' => '\\)', // Close parenthesis
+            '~' => '\\~', // Tilde
+            '`' => '\\`', // Backtick
+            '>' => '\\>', // Greater than
+            '#' => '\\#', // Hash
+            '+' => '\\+', // Plus
+            '-' => '\\-', // Minus
+            '=' => '\\=', // Equal
+            '|' => '\\|', // Pipe
+            '{' => '\\{', // Open curly brace
+            '}' => '\\}', // Close curly brace
+            '.' => '\\.', // Dot
+            '!' => '\\!',  // Exclamation mark
+        ];
+
+        // Escape các ký tự trong nội dung code block và preformatted text
+        $message = preg_replace_callback(
+            '/(```(.*?)```|`(.*?)`)/s',
+            function ($matches) {
+                // Escape tất cả dấu backtick và dấu gạch chéo ngược trong code block
+                return str_replace(['`', '\\'], ['\\`', '\\\\'], $matches[0]);
+            },
+            $message
+        );
+
+        // Escape các ký tự trong inline links (thoát ký tự ')' và '\')
+        $message = preg_replace_callback(
+            '/\[(.*?)\]\((.*?)\)/',
+            function ($matches) {
+                $escaped_url = str_replace([')', '\\'], ['\\)', '\\\\'], $matches[2]);
+                return '[' . $matches[1] . '](' . $escaped_url . ')';
+            },
+            $message
+        );
+
+        // Escape các ký tự đặc biệt chung cho tất cả các trường hợp còn lại
+        return str_replace(array_keys($escape_chars_general), array_values($escape_chars_general), $message);
     }
 }
